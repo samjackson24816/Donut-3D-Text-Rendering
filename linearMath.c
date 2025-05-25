@@ -1,6 +1,8 @@
 
 #include "mathUtils.h"
 #include "linearMath.h"
+#define _USE_MATH_DEFINES
+#include <math.h>
 
 Vec3 vec3fromVec2Int(Vec2Int v)
 {

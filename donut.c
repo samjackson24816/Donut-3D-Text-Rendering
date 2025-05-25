@@ -1,10 +1,3 @@
-// https://gist.github.com/gcr/1075131
-
-/*
-To run this code:
-gcc -o donut donut.c -lncurses -lm && ./donut
-*/
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -95,7 +88,16 @@ void render(int width, int height, double arr[width][height])
     refresh();
 }
 
-Vec3 fpsControls(char input, double yawRad, double pitchRad, double moveSpeed, double rotSpeed, double dt, Vec3 cameraPos)
+Vec3 cameraPos = {0,
+                  -10,
+                  0};
+
+double cameraYawRad = 0;
+double cameraPitchRad = 0;
+
+
+
+Vec3 fpsControls(char input, double moveSpeed, double rotSpeed, double dt, Vec3 cameraPos)
 {
     Vec3 camForward = getDirection(cameraYawRad, cameraPitchRad);
 
@@ -146,18 +148,13 @@ Vec3 fpsControls(char input, double yawRad, double pitchRad, double moveSpeed, d
     {
         cameraPitchRad += rotSpeed;
     }
+
+    return cameraPos;
 }
-
-Vec3 cameraPos = {0,
-                  -10,
-                  0};
-
-double cameraYawRad = 0;
-double cameraPitchRad = 0;
 
 void update(double time, double dt, char input, int width, int height, double arr[width][height], double zBuff[width][height])
 {
-    cameraPos = fpsControls(input, cameraYawRad, cameraPitchRad, 100, 2, dt, cameraPos);
+    cameraPos = fpsControls(input, 100, 2, dt, cameraPos);
 
     Vec3 cameraForward = getDirection(cameraYawRad, cameraPitchRad);
 
